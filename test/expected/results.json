@@ -1,0 +1,9 @@
+{
+   "testTrue": true,
+   "testFalse": false,
+   "testAll": false,
+   "testAsyncTrue": true,
+   "testAsyncFalse": false,
+   "executableTrue": true,
+   "executableFalse": false
+}
