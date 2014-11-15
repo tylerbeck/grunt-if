@@ -15,6 +15,11 @@ module.exports = function( grunt ) {
     // Project configuration.
     grunt.initConfig( {
 
+        configBoolean: true,
+        configString: "test",
+        configInt: 5,
+
+
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -33,6 +38,103 @@ module.exports = function( grunt ) {
 
         // Configuration to be run (and then tested).
         if: {
+            testConfigBoolean:{
+                options:{
+                    config: 'configBoolean'
+                },
+                ifFalse: [ 'ifFalse:testConfigBoolean' ],
+                ifTrue: [ 'ifTrue:testConfigBoolean' ]
+            },
+            testConfigBooleanFalse:{
+                options:{
+                    config: {
+                        property: 'configBoolean',
+                        operand: '=',
+                        value: false
+                    }
+                },
+                ifFalse: [ 'ifFalse:testConfigBooleanFalse' ],
+                ifTrue: [ 'ifTrue:testConfigBooleanFalse' ]
+            },
+            testConfigMissing:{
+                options:{
+                    config: 'configMissing'
+                },
+                ifFalse: [ 'ifFalse:testConfigMissing' ],
+                ifTrue: [ 'ifTrue:testConfigMissing' ]
+            },
+            testConfigString:{
+                options:{
+                    config: 'configString'
+                },
+                ifFalse: [ 'ifFalse:testConfigString' ],
+                ifTrue: [ 'ifTrue:testConfigString' ]
+            },
+            testConfigStringEquals:{
+                options:{
+                    config: {
+                        property: 'configString',
+                        value: 'test'
+                    }
+                },
+                ifFalse: [ 'ifFalse:testConfigStringEquals' ],
+                ifTrue: [ 'ifTrue:testConfigStringEquals' ]
+            },
+            testConfigStringNotEquals:{
+                options:{
+                    config: {
+                        property: 'configString',
+                        operand: '!=',
+                        value: 'test'
+                    }
+                },
+                ifFalse: [ 'ifFalse:testConfigStringNotEquals' ],
+                ifTrue: [ 'ifTrue:testConfigStringNotEquals' ]
+            },
+            testConfigIntEquals:{
+                options:{
+                    config: {
+                        property: 'configInt',
+                        operand: '=',
+                        value: 5
+                    }
+                },
+                ifFalse: [ 'ifFalse:testConfigIntEquals' ],
+                ifTrue: [ 'ifTrue:testConfigIntEquals' ]
+            },
+            testConfigIntNotEquals:{
+                options:{
+                    config: {
+                        property: 'configInt',
+                        operand: '!=',
+                        value: 5
+                    }
+                },
+                ifFalse: [ 'ifFalse:testConfigIntNotEquals' ],
+                ifTrue: [ 'ifTrue:testConfigIntNotEquals' ]
+            },
+            testConfigIntGreater:{
+                options:{
+                    config: {
+                        property: 'configInt',
+                        operand: '>',
+                        value: 1
+                    }
+                },
+                ifFalse: [ 'ifFalse:testConfigIntGreater' ],
+                ifTrue: [ 'ifTrue:testConfigIntGreater' ]
+            },
+            testConfigIntLess:{
+                options:{
+                    config: {
+                        property: 'configInt',
+                        operand: '>',
+                        value: 10
+                    }
+                },
+                ifFalse: [ 'ifFalse:testConfigIntLess' ],
+                ifTrue: [ 'ifTrue:testConfigIntLess' ]
+            },
             testTrue:{
                 options:{
                     test: function(){

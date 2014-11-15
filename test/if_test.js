@@ -23,6 +23,16 @@ var grunt = require('grunt');
 */
 
 var testProps = [
+  'testConfigBoolean',
+  'testConfigBooleanFalse',
+  'testConfigMissing',
+  'testConfigString',
+  'testConfigStringEquals',
+  'testConfigStringNotEquals',
+  'testConfigIntEquals',
+  'testConfigIntNotEquals',
+  'testConfigIntGreater',
+  'testConfigIntLess',
   'testTrue',
   'testFalse',
   'testAll',
@@ -47,7 +57,7 @@ testProps.forEach( function( prop ) {
     //var expected = grunt.file.readJSON( 'test/expected/results.json' )[prop];
     test.equal( actual, expected, prop + ' result not expected ' );
     test.done();
-  }
+  };
 } );
 
 exports.if = tests;

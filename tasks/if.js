@@ -28,6 +28,17 @@ module.exports = function( grunt ) {
             executable: undefined //test if cli executable exists
         } );
 
+        function getTests( list, getTest ){
+            //normalize list as array
+            list = [].concat( list );
+            var tests = [];
+            list.forEach( function( item ){
+                tests.push( getTest( item ) );
+            } );
+            return tests;
+        }
+
+
         function runTests(){
 
             var deferred = q.defer();
@@ -98,6 +109,68 @@ module.exports = function( grunt ) {
                 } );
             }
 
+            //normalize and add test functions
+            if ( options.config ){
+                options.config = [].concat( options.config );
+                options.config.forEach( function( config ){
+
+                    tests.push( function(){
+                        var d = q.defer();
+                        var val;
+                        if ( typeof config === 'string' ){
+                            val = grunt.config( config );
+                            if (val){
+                                d.resolve();
+                            }
+                            else{
+                                d.reject('config value is not truthy');
+                            }
+                        }
+                        else if ( typeof config === 'object' ){
+                            if ( config.property !== undefined && config.value !== undefined ){
+                                val = grunt.config( config.property );
+                                var result = false;
+                                switch( config.operand ){
+                                    case ">=":
+                                        result = val >= config.value;
+                                        break;
+                                    case "<=":
+                                        result = val <= config.value;
+                                        break;
+                                    case ">":
+                                        result = val > config.value;
+                                        break;
+                                    case "<":
+                                        result = val < config.value;
+                                        break;
+                                    case "!=":
+                                        result = val !== config.value;
+                                        break;
+                                    default:
+                                        result = val === config.value;
+                                        break;
+                                }
+
+                                if (result){
+                                    d.resolve();
+                                }
+                                else{
+                                    d.reject();
+                                }
+                            }
+                            else{
+                                d.reject('config property and value must be set');
+                            }
+                        }
+
+                        return d.promise;
+                    });
+
+                });
+            }
+
+
+
             //run test functions
             tests.reduce( q.when, q() )
                     .then( function(){
@@ -110,6 +183,7 @@ module.exports = function( grunt ) {
 
             return deferred.promise;
         }
+
 
         runTests().then(
                 function(){
