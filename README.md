@@ -59,6 +59,13 @@ Default value: `[]`
 
 If set, tests will be performed to determine whether the specified command line executable(s) exist.
 
+#### options.config
+Type: `String | Object | Array of Strings or Objects`
+Default value: `[]`
+
+If a string, the test will be true if the config value of the given string is truthy.
+If an object, the test will do do a comparison to the provided value using the specified operand.
+
 
 ### Usage Examples
 
@@ -111,6 +118,42 @@ grunt.initConfig({
         default: {
             options: {
                 executable: 'fontforge'
+            },
+            ifTrue: [ 'taskIfTrue' ]
+            ifFalse: [ 'taskIfFalse' ]
+        }
+    }
+});
+```
+
+#### Test Config Value
+In this example, `ifTrue` tasks are executed if the config value is truthy.
+
+```js
+grunt.initConfig({
+    if: {
+        default: {
+            options: {
+                config: 'settings.param'
+            },
+            ifTrue: [ 'taskIfTrue' ]
+            ifFalse: [ 'taskIfFalse' ]
+        }
+    }
+});
+```
+In this example, `ifTrue` tasks are executed if the config value matches.
+
+```js
+grunt.initConfig({
+    if: {
+        default: {
+            options: {
+                config: {
+                    property: "settings.param",
+                    value: "test",
+                    operand: "=" //options are: = | != | < | <= | > | >=
+                }
             },
             ifTrue: [ 'taskIfTrue' ]
             ifFalse: [ 'taskIfFalse' ]
