@@ -184,21 +184,20 @@ module.exports = function( grunt ) {
             return deferred.promise;
         }
 
-
-        runTests().then(
-                function(){
+        var tasks = [];
+        runTests()
+                .then( function(){
                     grunt.log.writeln('[if] tests evaluated true');
-                    var tasks = task.data.ifTrue ? [].concat( task.data.ifTrue ) : [];
-                    grunt.verbose.writeln('   ',tasks.join(', '));
-                    grunt.task.run( tasks );
-                },
-                function( error ){
+                    tasks = task.data.ifTrue ? [].concat( task.data.ifTrue ) : [];
+                }, function( error ){
                     grunt.log.writeln('[if] tests evaluated false: '+error);
-                    var tasks = task.data.ifFalse ? [].concat( task.data.ifFalse ) : [];
-                    grunt.verbose.writeln('   ',tasks.join(', '));
+                    tasks = task.data.ifFalse ? [].concat( task.data.ifFalse ) : [];
+                })
+                .finally( function(){
+                    grunt.verbose.writeln('[if] tasks: ',tasks.join(', '));
                     grunt.task.run( tasks );
-                }
-        ).finally( done );
+                    done();
+                } );
 
 
     } );
