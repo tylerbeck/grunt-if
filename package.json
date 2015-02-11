@@ -1,7 +1,7 @@
 {
   "name": "grunt-if",
   "description": "Conditionally run tasks",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "https://github.com/tylerbeck/grunt-if",
   "author": {
     "name": "Tyler Beck",
