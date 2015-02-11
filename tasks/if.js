@@ -187,14 +187,14 @@ module.exports = function( grunt ) {
         var tasks = [];
         runTests()
                 .then( function(){
-                    grunt.log.writeln('[if] tests evaluated true');
+                    grunt.log.writeln('[if] tests evaluated true: ');
                     tasks = task.data.ifTrue ? [].concat( task.data.ifTrue ) : [];
                 }, function( error ){
                     grunt.log.writeln('[if] tests evaluated false: '+error);
-                    tasks = task.data.ifFalse ? [].concat( task.data.ifFalse ) : [];
+       				tasks = task.data.ifFalse ? [].concat( task.data.ifFalse ) : [];
                 })
                 .finally( function(){
-                    grunt.verbose.writeln('[if] tasks: ',tasks.join(', '));
+                    grunt.log.writeln('[if] running tasks: \n\t',tasks.join('\n\t'));
                     grunt.task.run( tasks );
                     done();
                 } );
