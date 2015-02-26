@@ -37,6 +37,13 @@
     "grunt": "~0.4.5"
   },
   "keywords": [
-    "gruntplugin","if","conditional","task switcher","dependency"
-  ]
+    "gruntplugin",
+    "if",
+    "conditional",
+    "task switcher",
+    "dependency"
+  ],
+  "devDependencies": {
+    "grunt-bump": "^0.3.0"
+  }
 }
